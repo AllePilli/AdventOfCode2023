@@ -42,11 +42,10 @@ def part2(_input: list[tuple[int, list[tuple]]]) -> int:
 
 def _get_rgb(s: str) -> tuple:
     completed_str = s
-    if 'red' not in completed_str:
-        completed_str += ', 0 red'
-    if 'green' not in completed_str:
-        completed_str += ', 0 green'
-    if 'blue' not in completed_str:
-        completed_str += ', 0 blue'
+    rgb_strs = ('red', 'green', 'blue')
+    for color in rgb_strs:
+        if color not in completed_str:
+            completed_str += f', 0 {color}'
+
     parts = completed_str.split(', ')
     return tuple([int(x.split(' ')[0]) for x in sorted(parts, key=lambda y: y.split(' ')[1], reverse=True)])
