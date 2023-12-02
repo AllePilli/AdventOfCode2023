@@ -1,13 +1,13 @@
 from days import * # do not delete this import !
 
 
-def get_lines(path: str) -> list[str]:
+def get_lines(file_path: str) -> list[str]:
     """
     Returns the lines of a file without the newline characters (\n)
-    :param path: Path to the file
+    :param file_path: Path to the file
     :return: List of str representing the lines in the file
     """
-    f = open(path)
+    f = open(file_path)
     return [x[:-1] for x in f.readlines()]
 
 
@@ -20,12 +20,19 @@ if __name__ == '__main__':
         (f'./input/day{day}_part2_test.txt', f'./input/day{day}.txt'),
     ]
 
+    try:
+        process_input_func = eval(f'day_module.process_input')
+    except AttributeError as e:
+        process_input_func = None
+
     for idx, (test_path, path) in enumerate(paths, start=1):
         try:
             function = eval(f'day_module.part{idx}')
 
             try:
-                test_result = function(get_lines(test_path))
+                test_lines = get_lines(test_path)
+                test_input = process_input_func(test_lines) if process_input_func is not None else test_lines
+                test_result = function(test_input)
                 expected_test_result = eval(f'day_module.part{idx}_exp_test_result')
 
                 assert test_result == expected_test_result, \
@@ -36,7 +43,9 @@ if __name__ == '__main__':
                 print(f'!! file not found, path = {test_path}')
 
             try:
-                result = function(get_lines(path))
+                lines = get_lines(path)
+                _input = process_input_func(lines) if process_input_func is not None else lines
+                result = function(_input)
                 print(f'Solution day {day} part {idx}: {result}')
                 expected_result = eval(f'day_module.part{idx}_exp_result')
                 assert result == expected_result, \

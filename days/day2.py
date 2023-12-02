@@ -9,22 +9,32 @@ part2_exp_result = 68638
 _game_re = r"Game (\d+): (.*)"
 
 
-def part1(lines: list[str]) -> int:
-    cubes_rgb = (12, 13, 14)
-    cnt = 0
+def process_input(lines: list[str]) -> list[tuple[int, list[tuple]]]:
+    """
+    Represents each line in the input as a tuple of 'game-id' and its corresponding subsets
+    :param lines: lines of program input
+    :return: list of games with subsets
+    """
+    processed = []
     for line in lines:
         game_id, subsets_str = re.findall(_game_re, line)[0]
         subsets = [_get_rgb(s) for s in subsets_str.split('; ')]
+        processed.append((int(game_id), subsets))
+    return processed
+
+
+def part1(_input: list[tuple[int, list[tuple]]]) -> int:
+    cubes_rgb = (12, 13, 14)
+    cnt = 0
+    for game_id, subsets in _input:
         if all(x[i] <= cubes_rgb[i] for x in subsets for i in range(3)):
-            cnt += int(game_id)
+            cnt += game_id
     return cnt
 
 
-def part2(lines: list[str]) -> int:
+def part2(_input: list[tuple[int, list[tuple]]]) -> int:
     power = 0
-    for line in lines:
-        _, subsets_str = re.findall(_game_re, line)[0]
-        subsets = [list(_get_rgb(s)) for s in subsets_str.split('; ')]
+    for _, subsets in _input:
         rgb = [[x[i] for x in subsets] for i in range(3)]
         power += functools.reduce(lambda x, y: x * y, [max(x) for x in rgb])
     return power
