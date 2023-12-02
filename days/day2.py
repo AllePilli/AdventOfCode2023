@@ -1,5 +1,6 @@
 import functools
 import re
+from math import prod
 
 part1_exp_test_result = 8
 part1_exp_result = 2776
@@ -25,18 +26,18 @@ def process_input(lines: list[str]) -> list[tuple[int, list[tuple]]]:
 
 def part1(_input: list[tuple[int, list[tuple]]]) -> int:
     cubes_rgb = (12, 13, 14)
-    cnt = 0
-    for game_id, subsets in _input:
-        if all(x[i] <= cubes_rgb[i] for x in subsets for i in range(3)):
-            cnt += game_id
-    return cnt
+
+    def is_possible(subsets: list[tuple]) -> bool:
+        return all(x[i] <= cubes_rgb[i] for x in subsets for i in range(len(cubes_rgb)))
+
+    return sum(game_id for game_id, subsets in _input if is_possible(subsets))
 
 
 def part2(_input: list[tuple[int, list[tuple]]]) -> int:
     power = 0
     for _, subsets in _input:
         rgb = [[x[i] for x in subsets] for i in range(3)]
-        power += functools.reduce(lambda x, y: x * y, [max(x) for x in rgb])
+        power += prod(max(x) for x in rgb)
     return power
 
 
