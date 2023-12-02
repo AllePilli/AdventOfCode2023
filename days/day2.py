@@ -1,6 +1,10 @@
+import functools
 import re
 
 part1_exp_test_result = 8
+part1_exp_result = 2776
+part2_exp_test_result = 2286
+part2_exp_result = 68638
 
 _game_re = r"Game (\d+): (.*)"
 
@@ -9,11 +13,21 @@ def part1(lines: list[str]) -> int:
     cubes_rgb = (12, 13, 14)
     cnt = 0
     for line in lines:
-        game_id, subsets_str = re.findall(_game_re, line, re.M)[0]
+        game_id, subsets_str = re.findall(_game_re, line)[0]
         subsets = [_get_rgb(s) for s in subsets_str.split('; ')]
-        if all(x[0] <= cubes_rgb[0] and x[1] <= cubes_rgb[1] and x[2] <= cubes_rgb[2] for x in subsets):
+        if all(x[i] <= cubes_rgb[i] for x in subsets for i in range(3)):
             cnt += int(game_id)
     return cnt
+
+
+def part2(lines: list[str]) -> int:
+    power = 0
+    for line in lines:
+        _, subsets_str = re.findall(_game_re, line)[0]
+        subsets = [list(_get_rgb(s)) for s in subsets_str.split('; ')]
+        rgb = [[x[i] for x in subsets] for i in range(3)]
+        power += functools.reduce(lambda x, y: x * y, [max(x) for x in rgb])
+    return power
 
 
 def _get_rgb(s: str) -> tuple:
