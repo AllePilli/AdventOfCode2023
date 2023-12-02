@@ -21,7 +21,7 @@ if __name__ == '__main__':
     ]
 
     try:
-        process_input_func = eval(f'day_module.process_input')
+        process_input_func = day_module.process_input
     except AttributeError as e:
         process_input_func = None
 
