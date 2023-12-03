@@ -12,7 +12,7 @@ def get_lines(file_path: str) -> list[str]:
 
 
 if __name__ == '__main__':
-    day = 2
+    day = 3
 
     day_module = eval(f'day{day}')
     paths = [
