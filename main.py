@@ -1,3 +1,4 @@
+import os.path
 from days import * # do not delete this import !
 
 
@@ -12,13 +13,23 @@ def get_lines(file_path: str) -> list[str]:
 
 
 if __name__ == '__main__':
-    day = 3
+    day = 2
 
     day_module = eval(f'day{day}')
-    paths = [
-        (f'./input/day{day}_part1_test.txt', f'./input/day{day}.txt'),
-        (f'./input/day{day}_part2_test.txt', f'./input/day{day}.txt'),
-    ]
+
+    # if the test inputs for part 1 and 2 are the same, just use one file named
+    # 'day{day}_test.txt'. otherwise use 2 separate files for the inputs:
+    # 'day{day}_part1_test.txt' and 'day{day}_part2_test.txt'
+    if os.path.exists(f'./input/day{day}_test.txt'):
+        paths = [
+            (f'./input/day{day}_test.txt', f'./input/day{day}.txt'),
+            (f'./input/day{day}_test.txt', f'./input/day{day}.txt'),
+        ]
+    else:
+        paths = [
+            (f'./input/day{day}_part1_test.txt', f'./input/day{day}.txt'),
+            (f'./input/day{day}_part2_test.txt', f'./input/day{day}.txt'),
+        ]
 
     try:
         process_input_func = day_module.process_input
