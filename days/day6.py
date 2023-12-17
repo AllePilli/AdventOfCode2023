@@ -3,6 +3,8 @@ from math import sqrt, ceil
 
 part1_exp_test_result = 288
 part1_exp_result = 1084752
+part2_exp_test_result = 71503
+part2_exp_result = 28228952
 
 
 def process_input(lines: list[str]) -> tuple[list[int], list[int]]:
@@ -22,4 +24,11 @@ def part1(_input: tuple[list[int], list[int]]) -> int:
 
     return prod
 
+
+def part2(_input: tuple[list[int], list[int]]) -> int:
+    time = int(''.join([str(x) for x in _input[0]]))
+    dist = int(''.join([str(x) for x in _input[1]]))
+
+    root = ceil((time + sqrt(time ** 2 - 4 * dist)) / 2) - 1
+    return root - (time - root) + 1
 
