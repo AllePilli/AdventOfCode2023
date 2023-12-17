@@ -19,8 +19,7 @@ def part1(_input: tuple[list[int], list[int]]) -> int:
     prod = 1
 
     for time, record in [(times[i], dists[i]) for i in range(len(times))]:
-        root = ceil((time + sqrt(time ** 2 - 4 * record)) / 2) - 1
-        prod *= root - (time - root) + 1
+        prod *= _count_to_beat_record(time, record)
 
     return prod
 
@@ -29,6 +28,9 @@ def part2(_input: tuple[list[int], list[int]]) -> int:
     time = int(''.join([str(x) for x in _input[0]]))
     dist = int(''.join([str(x) for x in _input[1]]))
 
-    root = ceil((time + sqrt(time ** 2 - 4 * dist)) / 2) - 1
-    return root - (time - root) + 1
+    return _count_to_beat_record(time, dist)
 
+
+def _count_to_beat_record(time: int, record: int) -> int:
+    root = ceil((time + sqrt(time ** 2 - 4 * record)) / 2) - 1
+    return root - (time - root) + 1
