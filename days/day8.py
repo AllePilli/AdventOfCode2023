@@ -1,10 +1,9 @@
-from functools import reduce
 from math import lcm
-from operator import mul
 
 part1_exp_test_result = 6
 part1_exp_result = 13301
 part2_exp_test_result = 6
+part2_exp_result = 7309459565207
 
 
 def part1(lines: list[str]) -> int:
