@@ -2,7 +2,8 @@ from typing import NamedTuple
 
 part1_exp_test_result = 8
 part1_exp_result = 7097
-part2_exp_test_result = 10
+part2_exp_test_result = (4, 8, 10)
+part2_exp_result = 355
 
 Point = NamedTuple('Point', [('x', int), ('y', int)])
 
