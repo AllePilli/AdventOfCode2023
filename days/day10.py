@@ -1,26 +1,9 @@
-from typing import NamedTuple
+from helpers import Point, N, E, S, W, add, mul, sub
 
 part1_exp_test_result = 8
 part1_exp_result = 7097
 part2_exp_test_result = (4, 8, 10)
 part2_exp_result = 355
-
-Point = NamedTuple('Point', [('x', int), ('y', int)])
-
-
-def add(p: Point, q: Point) -> Point:
-    return Point(p.x + q.x, p.y + q.y)
-
-
-def mul(p: Point, a: int) -> Point:
-    return Point(p.x * a, p.y * a)
-
-
-def sub(p: Point, q: Point) -> Point:
-    return Point(p.x - q.x, p.y - q.y)
-
-
-N, E, S, W = Point(0, -1), Point(1, 0), Point(0, 1), Point(-1, 0)
 
 _pipes = {
     '|': (N, S),

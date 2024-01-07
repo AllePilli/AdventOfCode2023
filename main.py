@@ -109,7 +109,7 @@ def solve_day(day: int, part: int):
 
 
 if __name__ == '__main__':
-    day = 10
+    day = 11
 
     for part in (1, 2):
         test_day(day, part)
