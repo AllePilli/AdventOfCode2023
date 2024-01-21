@@ -6,6 +6,7 @@ from helpers import Point, manhattan_dist, sub, mul, add
 
 part1_exp_test_result = 374
 part1_exp_result = 9609130
+part2_exp_result = 702152204842
 
 
 def _expand(lines: list[str]) -> list[list[str]]:
