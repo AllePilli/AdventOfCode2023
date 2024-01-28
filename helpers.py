@@ -1,4 +1,8 @@
-from typing import NamedTuple
+from typing import NamedTuple, Callable, TypeVar
+
+import numpy as np
+
+_T = TypeVar('_T')
 
 
 def window(lt, size=2):
@@ -11,31 +15,21 @@ def window(lt, size=2):
         yield lt[i:i + size]
 
 
+def transpose(lst: list) -> list:
+    return np.array(lst).T.tolist()
+
+
+def split(lst: list[_T], el: _T) -> list[list[_T]]:
+    arr = np.array(lst)
+    idx = np.where(arr == el)[0]
+    sub_arrays = np.split(arr, idx + 1)
+    return [sub_array.tolist()[:-1] if i < len(sub_arrays) - 1 else sub_array.tolist()
+            for i, sub_array in enumerate(sub_arrays) if len(sub_array) > 0]
+
+
 ######################################
 # POINT
 ######################################
-
-# class Point:
-#     def __init__(self, x: int, y: int):
-#         self.x = x
-#         self.y = y
-#
-#     def __add__(self, other: 'Point') -> 'Point':
-#         return Point(self.x + other.x, self.y + other.y)
-#
-#     def __sub__(self, other: 'Point') -> 'Point':
-#         return Point(self.x - other.x, self.y - other.y)
-#
-#     def __mul__(self, other: int) -> 'Point':
-#         return Point(self.x * other, self.y * other)
-#
-#     def __iter__(self):
-#         return iter((self.x, self.y))
-#
-#     def __getitem__(self, idx) -> int:
-#         return (self.x, self.y)[idx]
-#
-#
 Point = NamedTuple('Point', [('x', int), ('y', int)])
 
 
